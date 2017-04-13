@@ -30,7 +30,7 @@ class L_Multicast:public L_Thread{
     std::string m_name;
     char * m_group;
     int m_port;
-    
+    int m_fd; 
 
     struct sockaddr_in m_addr;
 

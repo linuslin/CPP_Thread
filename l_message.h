@@ -5,9 +5,9 @@
 
 struct L_Message
 {
-    //static const int MSGSIZE=256;
-    //unsigned char m_msg[MSGSIZE];
-    unsigned char* m_msg;
+    static const int MSGSIZE=256;
+    unsigned char m_msg[MSGSIZE];
+    //unsigned char* m_msg;
     unsigned int m_len;
 
     L_Message(unsigned char * msg, unsigned int len);

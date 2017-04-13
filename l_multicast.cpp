@@ -1,8 +1,8 @@
 #include "l_multicast.h"
+#include "l_multicast_util.h"
 
 #include <string>
 #include <iostream>
-
 
 
 //tmp
@@ -22,7 +22,7 @@ int L_Multicast::start()
 {
     std::string errorMsg; 
     int result=0;
-    if((result=L_Multicast_Util::connect(this->m_group,this->m_port,this->m_addr,errorMsg))<0){
+    if((result=L_Multicast_Util::connect(this->m_fd,this->m_group,this->m_port,this->m_addr,errorMsg))<0){
         std::cout<<"setup connection failed\n";
         return -1; 
     }else{
@@ -32,21 +32,19 @@ int L_Multicast::start()
 
 
 void* L_Multicast::run(){
-    int result,fd=0;
+    int result;
     ssize_t nbyte;
-    L_Message * msg;
-    int size = BUFFERSIZE;
-    char msgbuf[size];
 
+    int size = BUFFERSIZE;
+    unsigned char msgbuf[size];
+    L_Message * msg; 
     while(1){ // need to add condition var
-        if((nbyte=L_Multicast_Util::receive(fd,msgbuf,size,this->m_addr))<0){
-        std::cerr<<"receive failed"<<std::endl;
+        memset(msgbuf, 0, sizeof(msgbuf));
+        if((nbyte=L_Multicast_Util::receive(this->m_fd,msgbuf,size,this->m_addr))<0){
+            //std::cerr<<"receive failed"<<std::endl;
     	}else{
-            puts(msgbuf);
-            BMPHeader header(msgbuf+1);
-            header.dump();
-            //msg = new L_Message("apple", 123);
-            //queue.add();
+            msg = new L_Message(msgbuf,size);
+            this->m_queue.add(msg);
         }
     }
 }

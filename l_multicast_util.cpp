@@ -1,7 +1,6 @@
 #include "l_multicast_util.h"
 
-int L_Multicast_Util::connect(const char * group, const int port, struct sockaddr_in &addr, std::string & errorMsg){
-    int fd;
+int L_Multicast_Util::connect(int& fd, const char * group, const int port, struct sockaddr_in &addr, std::string & errorMsg){
     struct ip_mreq mreq;
     u_int modify=1;
 
@@ -51,7 +50,7 @@ int L_Multicast_Util::connect(const char * group, const int port, struct sockadd
     return 0;   
 }
 
-ssize_t L_Multicast_Util::receive(int & fd, char * msgbuf,const size_t size,struct sockaddr_in& addr){
+ssize_t L_Multicast_Util::receive(int& fd,unsigned char * msgbuf,const size_t size,struct sockaddr_in& addr){
     ssize_t nbytes;
     int flags=0;
     socklen_t addrlen=sizeof(addr);

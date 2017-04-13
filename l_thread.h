@@ -1,3 +1,8 @@
+
+
+#ifndef __L_THREAD_H__
+#define __L_THREAD_H__
+
 #include <pthread.h>
  
 class L_Thread
@@ -18,3 +23,5 @@ class L_Thread
     int        m_running;
     int        m_detached;
 };
+
+#endif
