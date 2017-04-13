@@ -6,10 +6,10 @@ class L_Thread
     L_Thread();
     virtual ~L_Thread();
  
-    int start();
-    int join();
-    int detach();
-    pthread_t self();
+    virtual int start();
+    virtual int join();
+    virtual int detach();
+    virtual pthread_t self();
  
     virtual void* run() = 0;
  
